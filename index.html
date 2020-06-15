@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wordCloud {
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wordCloud"></div>
+    <!-- <img src="./china.png" alt=""> -->
+</body>
+
+</html>
+<script src="./node_modules/echarts/dist/echarts.js"></script>
+<script src="./node_modules/echarts-wordcloud/dist/echarts-wordcloud.js"></script>
+<script>
+    var myChart = echarts.init(document.getElementById('wordCloud'));
+    let maskImg = new Image()
+    console.log(maskImg)
+    // maskImg.src = 'data:image/png;base64,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'
+   maskImg.src = 'data:image/png;base64,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'
+    maskImg.setAttribute("crossOrigin", 'Anonymous')
+    option = {
+        title: {
+            text: '上海',//标题
+            y: 530,
+            x:'center',
+            textStyle: {
+                fontSize: 18
+            }
+
+        },
+        backgroundColor: '#F7F7F7',
+        tooltip: {
+            show: true
+        },
+        series: [{
+            name: '热点分析',//数据提示窗标题
+            type: 'wordCloud',
+            sizeRange: [6, 24],//画布范围，如果设置太大会出现少词（溢出屏幕）
+            rotationRange: [-45, 90],//数据翻转范围
+            shape: 'pentagon',
+            textPadding: 0,
+            shape: 'pentagon',
+            maskImage: maskImg,
+            width: 800,
+            height: 800,
+            autoSize: {
+                enable: true,
+                minSize: 5
+            },
+            textStyle: {
+                normal: {
+                    color: function () {
+                        let colors = ['rgb(156,209,199)','rgb(253,237,130)','rgb(138,176,208)','rbg(179,131,185)','rgb(245,207,228)','rgb(243,182,112)','rgb(189,187,215)','rbg(188,220,120)','rgb(210,234,200)','rbg(255,254,188)','rgb(236,134,119)'];
+                        let colorN = colors.length;
+                        let n = Math.floor(Math.random()*(colorN-1+1)+1)
+                        if(n>11||n<1){
+                            n = 1;
+                        }
+                        return colors[n]
+                    },
+                    fontWeight:800
+                },
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            data: [
+                {
+                    name: "互连网",
+                    value: 1000
+                },
+                {
+                    name: "品牌",
+                    value: 520
+                },
+                {
+                    name: '韩国',
+                    value: 100
+                },
+                {
+                    name: "零食",
+                    value: 1000
+                },
+                {
+                    name: "餐饮",
+                    value: 520
+                },
+                {
+                    name: '自营',
+                    value: 100
+                },
+                {
+                    name: "服饰",
+                    value: 1000
+                },
+                {
+                    name: "百货",
+                    value: 520
+                },
+                {
+                    name: '面积',
+                    value: 100
+                },
+                {
+                    name: "欧洲",
+                    value: 1000
+                },
+                {
+                    name: "美国",
+                    value: 520
+                },
+                {
+                    name: '上海',
+                    value: 100
+                },
+                {
+                    name: "互连网",
+                    value: 1000
+                },
+                {
+                    name: "品牌",
+                    value: 520
+                },
+                {
+                    name: '韩国',
+                    value: 100
+                },
+                {
+                    name: "零食",
+                    value: 1000
+                },
+                {
+                    name: "餐饮",
+                    value: 520
+                },
+                {
+                    name: '自营',
+                    value: 100
+                },
+                {
+                    name: "服饰",
+                    value: 1000
+                },
+                {
+                    name: "百货",
+                    value: 520
+                },
+                {
+                    name: '面积',
+                    value: 100
+                },
+                {
+                    name: "欧洲",
+                    value: 1000
+                },
+                {
+                    name: "美国",
+                    value: 520
+                },
+                {
+                    name: '上海',
+                    value: 100
+                },
+                {
+                    name: "互连网",
+                    value: 1000
+                },
+                {
+                    name: "品牌",
+                    value: 520
+                },
+                {
+                    name: '韩国',
+                    value: 100
+                },
+                {
+                    name: "零食",
+                    value: 1000
+                },
+                {
+                    name: "餐饮",
+                    value: 520
+                },
+                {
+                    name: '自营',
+                    value: 100
+                },
+                {
+                    name: "服饰",
+                    value: 1000
+                },
+                {
+                    name: "百货",
+                    value: 520
+                },
+                {
+                    name: '面积',
+                    value: 100
+                },
+                {
+                    name: "欧洲",
+                    value: 1000
+                },
+                {
+                    name: "美国",
+                    value: 520
+                },
+                {
+                    name: '上海',
+                    value: 100
+                },
+                {
+                    name: "互连网",
+                    value: 1000
+                },
+                {
+                    name: "品牌",
+                    value: 520
+                },
+                {
+                    name: '韩国',
+                    value: 100
+                },
+                {
+                    name: "零食",
+                    value: 1000
+                },
+                {
+                    name: "餐饮",
+                    value: 520
+                },
+                {
+                    name: '自营',
+                    value: 100
+                },
+                {
+                    name: "服饰",
+                    value: 1000
+                },
+                {
+                    name: "百货",
+                    value: 520
+                },
+                {
+                    name: '面积',
+                    value: 100
+                },
+                {
+                    name: "欧洲",
+                    value: 1000
+                },
+                {
+                    name: "美国",
+                    value: 520
+                },
+                {
+                    name: '上海',
+                    value: 100
+                },
+                {
+                    name: "互连网",
+                    value: 1000
+                },
+                {
+                    name: "品牌",
+                    value: 520
+                },
+                {
+                    name: '韩国',
+                    value: 100
+                },
+                {
+                    name: "零食",
+                    value: 1000
+                },
+                {
+                    name: "餐饮",
+                    value: 520
+                },
+                {
+                    name: '自营',
+                    value: 100
+                },
+                {
+                    name: "服饰",
+                    value: 1000
+                },
+                {
+                    name: "百货",
+                    value: 520
+                },
+                {
+                    name: '面积',
+                    value: 100
+                },
+                {
+                    name: "欧洲",
+                    value: 1000
+                },
+                {
+                    name: "美国",
+                    value: 520
+                },
+                {
+                    name: '上海',
+                    value: 100
+                },
+                {
+                    name: "互连网",
+                    value: 1000
+                },
+                {
+                    name: "品牌",
+                    value: 520
+                },
+                {
+                    name: '韩国',
+                    value: 100
+                },
+                {
+                    name: "零食",
+                    value: 1000
+                },
+                {
+                    name: "餐饮",
+                    value: 520
+                },
+                {
+                    name: '自营',
+                    value: 100
+                },
+                {
+                    name: "服饰",
+                    value: 1000
+                },
+                {
+                    name: "百货",
+                    value: 520
+                },
+                {
+                    name: '面积',
+                    value: 100
+                },
+                {
+                    name: "欧洲",
+                    value: 1000
+                }, {
+                    name: '上海',
+                    value: 100
+                },
+                {
+                    name: "互连网",
+                    value: 1000
+                },
+                {
+                    name: "品牌",
+                    value: 520
+                },
+                {
+                    name: '韩国',
+                    value: 100
+                },
+                {
+                    name: "零食",
+                    value: 1000
+                },
+                {
+                    name: "餐饮",
+                    value: 520
+                },
+                {
+                    name: '自营',
+                    value: 100
+                },
+                {
+                    name: "服饰",
+                    value: 1000
+                },
+                {
+                    name: "百货",
+                    value: 520
+                },
+                {
+                    name: '面积',
+                    value: 100
+                },
+                {
+                    name: "欧洲",
+                    value: 1000
+                }
+            ]//name和value建议用小写，大写有时会出现兼容问题
+        }]
+    };
+    // maskImg.crossOrigin = 'anonymous';
+    maskImg.onload = function () {
+        myChart.setOption(option);
+    }
+</script>
